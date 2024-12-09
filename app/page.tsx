@@ -24,7 +24,7 @@ export default function Component() {
         <div className="flex flex-1 items-center mx-4">
           <input
             type="text"
-            placeholder="Search cars, brands, models..."
+            placeholder="Search electronics, gadgets, accessories..."
             className="w-full h-9 rounded-md border border-gray-300 bg-white px-4 text-sm placeholder-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-400 dark:focus:ring-blue-400"
           />
           <Button
