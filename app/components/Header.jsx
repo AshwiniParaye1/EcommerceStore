@@ -8,7 +8,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 
 const Header = () => {
   return (
-    <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
+    <header className="flex h-20 w-full shrink-0 items-center">
       <Link href="#" className="mr-6 hidden lg:flex" prefetch={false}>
         <Image
           src="/logo.png"
@@ -21,7 +21,7 @@ const Header = () => {
       </Link>
 
       {/* Search Bar */}
-      <div className="flex flex-1 items-center mx-4">
+      <div className="flex flex-1 items-center">
         <input
           type="text"
           placeholder="Search electronics, gadgets, accessories..."
