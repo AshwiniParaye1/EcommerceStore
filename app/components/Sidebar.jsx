@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-const Footer = () => {
+const Sidebar = () => {
   return (
     <div className="flex flex-col items-center mt-20 gap-y-20">
       <Link
@@ -29,4 +29,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default Sidebar;
