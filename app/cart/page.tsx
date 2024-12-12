@@ -13,6 +13,8 @@ const CartPage = () => {
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
 
+  const availableCoupons = ["SAVE10", "DISCOUNT20"];
+
   const handleCheckout = () => {
     setOrderPlaced(true);
     setTimeout(() => {
@@ -22,9 +24,11 @@ const CartPage = () => {
   };
 
   const handleApplyCoupon = () => {
-    //Apply a 10% discount for the "SAVE10" coupon
+    // Apply different discounts based on the coupon
     if (couponCode === "SAVE10") {
-      setDiscount(0.1);
+      setDiscount(0.1); // 10% discount
+    } else if (couponCode === "DISCOUNT20") {
+      setDiscount(0.2); // 20% discount
     } else {
       alert("Invalid coupon code.");
     }
@@ -98,6 +102,20 @@ const CartPage = () => {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Available Coupons Section */}
+          <div className="mt-6">
+            <p className="text-lg font-semibold text-gray-800 mb-4">
+              Available Coupons:
+            </p>
+            <ul className="list-disc pl-6">
+              {availableCoupons.map((coupon) => (
+                <li key={coupon} className="text-gray-600">
+                  {coupon}
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Apply Coupon Section */}
