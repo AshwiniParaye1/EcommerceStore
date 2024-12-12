@@ -1,7 +1,6 @@
 "use client";
-// pages/shop.tsx
-// pages/shop.tsx
-import React, { useState, useEffect } from "react";
+
+import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { productLinks } from "../constants";
@@ -42,6 +41,11 @@ const Shop = () => {
       0
     );
     setTotal(newTotal); // Update the total state
+  };
+
+  const handleBuyNow = (product: Product) => {
+    addToCart(product); // Add the product to the cart
+    router.push("/cart"); // Navigate to the cart page
   };
 
   return (
@@ -97,9 +101,15 @@ const Shop = () => {
                     <Button
                       variant="outline"
                       className="w-full py-2 px-4 rounded"
-                      onClick={() => router.push("/cart")}
+                      onClick={() =>
+                        handleBuyNow({
+                          id: index,
+                          title: product.title,
+                          price: product.price
+                        })
+                      }
                     >
-                      Go to Cart
+                      Buy Now
                     </Button>
                   </div>
                 </div>

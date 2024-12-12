@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { CartItem } from "../types";
@@ -8,8 +8,9 @@ import { useCart } from "../context/CartContext";
 import { parsePrice } from "@/lib/utils";
 
 const Cart = () => {
-  const { cart, setCart, total } = useCart();
+  const { cart, setCart, total, setTotal } = useCart();
   const router = useRouter();
+  const [orderPlaced, setOrderPlaced] = useState(false); // To handle the order placed popup
 
   const handleQuantityChange = (id: number, quantity: number) => {
     const updatedCart = cart.map((item) =>
@@ -23,6 +24,14 @@ const Cart = () => {
     return cart.reduce((acc, item) => {
       return acc + parsePrice(item.price) * item.quantity;
     }, 0);
+  };
+
+  const handleCheckout = () => {
+    setOrderPlaced(true); // Show the order placed success message
+    setTimeout(() => {
+      setCart([]); // Clear the cart after the success message
+      setTotal(0); // Reset the total
+    }, 2000); // Wait for 2 seconds before clearing the cart
   };
 
   return (
@@ -67,13 +76,22 @@ const Cart = () => {
               Total: ${calculateTotal().toFixed(2)}
             </p>
 
-            <Button
-              onClick={() => router.push("/shop")}
-              className="bg-blue-500 text-white"
-            >
-              Continue Shopping
-            </Button>
+            <div className="space-x-4">
+              {/* Checkout button */}
+              <Button
+                onClick={handleCheckout}
+                className="bg-blue-500 text-white"
+              >
+                Checkout
+              </Button>
+            </div>
           </div>
+
+          {orderPlaced && (
+            <div className="mt-4 p-4 bg-green-100 text-green-800 rounded">
+              Order placed successfully!
+            </div>
+          )}
         </div>
       )}
     </div>
