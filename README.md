@@ -78,3 +78,7 @@ npm run dev
 ```
 
 This will start the app locally, and you can access it in your browser at http://localhost:3000.
+
+## Deployment
+
+You can view the live demo of the project here: [Live Demo](https://e-store11.vercel.app/)
