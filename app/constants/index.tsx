@@ -1,6 +1,6 @@
 export const productLinks = [
   {
-    url: "/assets/images/headphone5.jpg",
+    url: "/assets/images/headphone.jpg",
     alt: "product1",
     title: "Stylish Headphones",
     price: "$299"
