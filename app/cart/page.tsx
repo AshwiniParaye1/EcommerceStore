@@ -4,20 +4,33 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useCart } from "../context/CartContext";
-import Header from "@/components/Header"; // Import Header
-import Link from "next/link"; // Import Link for navigation
+import Header from "@/components/Header";
+import Link from "next/link";
 
 const CartPage = () => {
   const { cart, total, removeFromCart, clearCart } = useCart();
-  const [orderPlaced, setOrderPlaced] = useState(false); // State to manage order placed success message
+  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [discount, setDiscount] = useState(0);
 
   const handleCheckout = () => {
-    setOrderPlaced(true); // Display the success message
+    setOrderPlaced(true);
     setTimeout(() => {
-      clearCart(); // Clear the cart after the success message
-      setOrderPlaced(false); // Reset the success message after 2 seconds
-    }, 2000); // Wait for 2 seconds before clearing the cart
+      clearCart();
+      setOrderPlaced(false);
+    }, 2000);
   };
+
+  const handleApplyCoupon = () => {
+    //Apply a 10% discount for the "SAVE10" coupon
+    if (couponCode === "SAVE10") {
+      setDiscount(0.1); // 10% discount
+    } else {
+      alert("Invalid coupon code.");
+    }
+  };
+
+  const discountedTotal = total - total * discount; // Calculate total after discount
 
   return (
     <div className="min-h-screen flex flex-col mx-auto px-4 md:px-6 lg:px-8 container">
@@ -87,9 +100,35 @@ const CartPage = () => {
             ))}
           </div>
 
+          {/* Apply Coupon Section */}
+          <div className="mt-6">
+            <div className="flex space-x-4">
+              <input
+                type="text"
+                placeholder="Enter coupon code"
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+                className="p-2 border rounded-md w-full"
+              />
+              <Button
+                variant="outline"
+                onClick={handleApplyCoupon}
+                className="font-semibold text-gray-800 py-2 px-6"
+              >
+                Apply
+              </Button>
+            </div>
+            {discount > 0 && (
+              <div className="mt-2 text-green-600">
+                Coupon applied! You get a {discount * 100}% discount.
+              </div>
+            )}
+          </div>
+
+          {/* Total and Checkout */}
           <div className="mt-8 flex justify-between items-center">
             <span className="text-2xl font-bold text-gray-900">
-              Total: ${total.toFixed(2)}
+              Total: ${discountedTotal.toFixed(2)}
             </span>
             <div className="flex space-x-6">
               <Button
