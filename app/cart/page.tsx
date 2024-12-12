@@ -24,13 +24,13 @@ const CartPage = () => {
   const handleApplyCoupon = () => {
     //Apply a 10% discount for the "SAVE10" coupon
     if (couponCode === "SAVE10") {
-      setDiscount(0.1); // 10% discount
+      setDiscount(0.1);
     } else {
       alert("Invalid coupon code.");
     }
   };
 
-  const discountedTotal = total - total * discount; // Calculate total after discount
+  const discountedTotal = total - total * discount;
 
   return (
     <div className="min-h-screen flex flex-col mx-auto px-4 md:px-6 lg:px-8 container">
@@ -44,7 +44,7 @@ const CartPage = () => {
       {cart.length === 0 ? (
         <div className="text-center py-8">
           <p className="text-lg text-gray-600 mb-4">
-            Oops! Looks like your cart is empty. 😕
+            Oops! Looks like your cart is empty.
           </p>
           <p className="text-md text-gray-500 mb-4">
             But don&apos;t worry! There&apos;s a world of amazing products

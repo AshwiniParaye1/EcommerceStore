@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CartItem, CartResponse, Product } from "@/app/types";
 
-// Simulated cart storage (replace with database in production)
 let cart: CartItem[] = [];
 
 export async function GET() {
