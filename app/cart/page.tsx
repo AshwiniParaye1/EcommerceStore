@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { CartItem } from "../types";
 import { useCart } from "../context/CartContext";
 import { parsePrice } from "@/lib/utils";
 import Header from "@/components/Header";
@@ -11,8 +9,7 @@ import Image from "next/image";
 import { productLinks } from "../constants"; // Import productLinks to access image URLs
 
 const Cart = () => {
-  const { cart, setCart, total, setTotal } = useCart();
-  const router = useRouter();
+  const { cart, setCart, setTotal } = useCart();
   const [orderPlaced, setOrderPlaced] = useState(false); // To handle the order placed popup
 
   const handleQuantityChange = (id: number, quantity: number) => {
