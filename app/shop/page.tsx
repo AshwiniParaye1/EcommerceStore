@@ -44,7 +44,10 @@ const Shop = () => {
   };
 
   const handleBuyNow = (product: Product) => {
-    addToCart(product); // Add the product to the cart
+    // If the cart is empty, add the item and redirect to the cart
+    if (cart.length === 0) {
+      addToCart(product); // Add the product to the cart
+    }
     router.push("/cart"); // Navigate to the cart page
   };
 
