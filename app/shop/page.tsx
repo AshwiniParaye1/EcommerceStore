@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { productLinks } from "../constants";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 
 const Shop = () => {
   return (

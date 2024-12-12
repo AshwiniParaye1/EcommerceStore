@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Header from "@/app/components/Header";
-import Sidebar from "./components/Sidebar";
+import Header from "@/components/Header";
+import Sidebar from "../components/Sidebar";
 import { homePageProductLinks } from "./constants";
 
 export default function Component() {
