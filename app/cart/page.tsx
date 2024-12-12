@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { CartItem } from "../types";
 import { useCart } from "../context/CartContext";
 import { parsePrice } from "@/lib/utils";
+import Header from "@/components/Header";
 
 const Cart = () => {
   const { cart, setCart, total, setTotal } = useCart();
@@ -35,7 +36,8 @@ const Cart = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="min-h-screen flex flex-col mx-auto px-4 md:px-6 lg:px-8 container">
+      <Header />
       <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
 
       {cart.length === 0 ? (
