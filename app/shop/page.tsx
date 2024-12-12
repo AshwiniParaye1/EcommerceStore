@@ -1,15 +1,18 @@
 "use client";
-
-import React, { useState } from "react";
+// pages/shop.tsx
+// pages/shop.tsx
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { productLinks } from "../constants";
 import Header from "../../components/Header";
 import { CartItem, Product } from "../types";
+import { useCart } from "../context/CartContext"; // Make sure the hook is correct
+import { useRouter } from "next/navigation";
 
 const Shop = () => {
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [total, setTotal] = useState(0);
+  const { cart, setCart, total, setTotal } = useCart(); // Now we have setTotal
+  const router = useRouter();
 
   // Function to parse price, removing '$' and converting to number
   const parsePrice = (price: string): number => {
@@ -33,72 +36,76 @@ const Shop = () => {
 
     setCart(updatedCart);
 
-    // Recalculate the total price: sum of price * quantity for each item
+    // Recalculate the total price
     const newTotal = updatedCart.reduce(
       (sum, item) => sum + parsePrice(item.price) * item.quantity,
       0
     );
-    setTotal(newTotal);
+    setTotal(newTotal); // Update the total state
   };
 
   return (
     <div className="min-h-screen flex flex-col mx-auto px-4 md:px-6 lg:px-8 container">
       <Header />
-
-      {/* Cart Info Section */}
-      <div className="p-4 mt-4 bg-gray-100 rounded-lg">
-        <h3 className="text-xl font-semibold">Cart</h3>
-        <p>Total Items: {cart.reduce((acc, item) => acc + item.quantity, 0)}</p>
-        <p>Total Price: ${total.toFixed(2)}</p>
-      </div>
-
       <div className="p-8">
         <h2 className="text-4xl font-bold text-gray-800 mb-6">Shop Products</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {productLinks.map((product, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between"
-              style={{ height: "350px", width: "100%" }}
-            >
-              <Image
-                src={product.url}
-                alt={product.alt}
-                width={300}
-                height={200}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4 flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    {product.title}
-                  </h3>
-                  <p className="text-gray-500 mt-2">{product.price}</p>
-                </div>
-                <div className="flex mt-4 space-x-2">
-                  <Button
-                    variant="outline"
-                    className="w-full py-2 px-4 rounded "
-                    onClick={() =>
-                      addToCart({
-                        id: index,
-                        title: product.title,
-                        price: product.price
-                      })
-                    }
-                  >
-                    Add to Cart
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full py-2 px-4 rounded "
-                  >
-                    Buy Now
-                  </Button>
+          {productLinks.map((product, index) => {
+            const isAddedToCart = cart.some((item) => item.id === index);
+            const cartItem = cart.find((item) => item.id === index);
+            const quantity = cartItem ? cartItem.quantity : 0;
+
+            return (
+              <div
+                key={index}
+                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between"
+                style={{ height: "350px", width: "100%" }}
+              >
+                <Image
+                  src={product.url}
+                  alt={product.alt}
+                  width={300}
+                  height={200}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800">
+                      {product.title}
+                    </h3>
+                    <p className="text-gray-500 mt-2">{product.price}</p>
+                    {isAddedToCart && (
+                      <p className="text-green-500 mt-2">
+                        Added to Cart (x{quantity})
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex mt-4 space-x-2">
+                    <Button
+                      variant="outline"
+                      className="w-full py-2 px-4 rounded"
+                      onClick={() =>
+                        addToCart({
+                          id: index,
+                          title: product.title,
+                          price: product.price
+                        })
+                      }
+                    >
+                      {isAddedToCart ? "Increase Quantity" : "Add to Cart"}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="w-full py-2 px-4 rounded"
+                      onClick={() => router.push("/cart")}
+                    >
+                      Go to Cart
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
