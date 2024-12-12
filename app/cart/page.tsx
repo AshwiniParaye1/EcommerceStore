@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useCart } from "../context/CartContext";
 import Header from "@/components/Header"; // Import Header
+import Link from "next/link"; // Import Link for navigation
 
 const CartPage = () => {
   const { cart, total, removeFromCart, clearCart } = useCart();
@@ -23,12 +24,25 @@ const CartPage = () => {
       {/* Header Component */}
       <Header />
 
-      <h1 className="text-3xl font-bold mb-6 mt-8 text-gray-900 p-8">
+      <h1 className="text-3xl font-bold mb-6 mt-8 text-gray-900 pl-8">
         Your Cart
       </h1>
 
       {cart.length === 0 ? (
-        <p className="text-lg text-gray-600 pl-8">Your cart is empty.</p>
+        <div className="text-center py-8">
+          <p className="text-lg text-gray-600 mb-4">
+            Oops! Looks like your cart is empty. 😕
+          </p>
+          <p className="text-md text-gray-500 mb-4">
+            But don&apos;t worry! There&apos;s a world of amazing products
+            waiting for you. 🛍️
+          </p>
+          <Link href="/shop">
+            <Button variant="outline" className="font-semibold py-2 px-6 ">
+              Start Shopping
+            </Button>
+          </Link>
+        </div>
       ) : (
         <div className="p-8">
           <div className="space-y-6">
