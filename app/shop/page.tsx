@@ -6,18 +6,33 @@ import { Button } from "@/components/ui/button";
 import { productLinks } from "../constants";
 import Header from "../../components/Header";
 
+interface CartItem {
+  id: number;
+  title: string;
+  price: string;
+  quantity: number;
+}
+
+interface Product {
+  id: number;
+  title: string;
+  price: string;
+}
+
 const Shop = () => {
-  // State for cart
-  const [cart, setCart] = useState<
-    { id: number; title: string; price: string; quantity: number }[]
-  >([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [total, setTotal] = useState(0);
 
-  const addToCart = (product: { id: number; title: string; price: string }) => {
+  // Function to parse price, removing '$' and converting to number
+  const parsePrice = (price: string): number => {
+    return parseFloat(price.replace("$", "").trim());
+  };
+
+  const addToCart = (product: Product) => {
     // Check if the product is already in the cart
     const existingProduct = cart.find((item) => item.id === product.id);
 
-    let updatedCart;
+    let updatedCart: CartItem[];
     if (existingProduct) {
       // Update quantity if the product is already in the cart
       updatedCart = cart.map((item) =>
@@ -28,12 +43,11 @@ const Shop = () => {
       updatedCart = [...cart, { ...product, quantity: 1 }];
     }
 
-    // Update the cart and total price
     setCart(updatedCart);
 
-    // Ensure that the price is a valid number and update the total price
+    // Recalculate the total price: sum of price * quantity for each item
     const newTotal = updatedCart.reduce(
-      (sum, item) => sum + (parseFloat(item.price) || 0) * item.quantity,
+      (sum, item) => sum + parsePrice(item.price) * item.quantity,
       0
     );
     setTotal(newTotal);
@@ -46,10 +60,7 @@ const Shop = () => {
       {/* Cart Info Section */}
       <div className="p-4 mt-4 bg-gray-100 rounded-lg">
         <h3 className="text-xl font-semibold">Cart</h3>
-        <p>
-          Total Items: {cart.reduce((acc, item) => acc + item.quantity, 0)}
-        </p>{" "}
-        {/* Display total item count */}
+        <p>Total Items: {cart.reduce((acc, item) => acc + item.quantity, 0)}</p>
         <p>Total Price: ${total.toFixed(2)}</p>
       </div>
 
