@@ -86,7 +86,7 @@ const CartPage = () => {
                     {item.quantity} x
                   </span>
                   <span className="text-sm text-gray-700 font-semibold">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    ${item.price.toFixed(2)}
                   </span>
                   <Button
                     variant="secondary"
