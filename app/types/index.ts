@@ -1,12 +1,24 @@
-export interface CartItem {
-  id: number;
-  title: string;
-  price: string;
-  quantity: number;
-}
-
 export interface Product {
   id: number;
   title: string;
-  price: string;
+  price: number;
+  description: string;
+  imageUrl: string;
+  category?: string;
+}
+
+export interface CartItem extends Product {
+  quantity: number;
+}
+
+export interface CartResponse {
+  cart: CartItem[];
+  total: number;
+  message?: string;
+}
+
+export interface ProductResponse {
+  products: Product[];
+  total: number;
+  message: string;
 }
