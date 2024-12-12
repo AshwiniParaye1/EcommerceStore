@@ -5,19 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { productLinks } from "../constants";
 import Header from "../../components/Header";
-
-interface CartItem {
-  id: number;
-  title: string;
-  price: string;
-  quantity: number;
-}
-
-interface Product {
-  id: number;
-  title: string;
-  price: string;
-}
+import { CartItem, Product } from "../types";
 
 const Shop = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
