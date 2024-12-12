@@ -5,9 +5,16 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Sidebar from "../components/Sidebar";
 import { homePageProductLinks } from "./constants";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 export default function Component() {
   const [activeIndex, setActiveIndex] = useState(0); // Track active image
+  const router = useRouter(); // Initialize the router
+
+  // Function to handle redirection
+  const handleBrowseProductsClick = () => {
+    router.push("/shop"); // Redirect to /shop
+  };
 
   return (
     <div className="min-h-screen flex flex-col mx-auto px-4 md:px-6 lg:px-8 container">
@@ -29,10 +36,15 @@ export default function Component() {
                 className="border-t-2 border-gray-400"
                 style={{ width: "20rem" }}
               ></div>
-              <p className="text-md font-bold ml-4 text-gray-400">
+              <p
+                className="text-md font-bold ml-4 text-gray-400 hover:text-gray-600 cursor-pointer"
+                onClick={handleBrowseProductsClick}
+              >
                 Discover now
               </p>
             </div>
+
+            {/* Added text below 'Discover now' */}
           </div>
 
           {/* Image Section */}
